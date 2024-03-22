@@ -1,0 +1,11 @@
+/backend/node_modules
+/backend/dist
+/backend/.env
+
+/frontend/library-frontend/node_modules
+/frontend/library-frontend/dist
+/frontend/library-frontend/.env
+
+.env.local
+.env.*.local
+.env
