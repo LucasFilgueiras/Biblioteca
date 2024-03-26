@@ -34,6 +34,7 @@
                   <v-text-field
                     v-model="bookPublicationYear"
                     label="Ano de publicação"
+                    type="number"
                     required
                   ></v-text-field>
                 </v-col>
@@ -50,6 +51,7 @@
                   <v-text-field
                     v-model="bookCopies"
                     label="Cópias"
+                    type="number"
                     required
                   ></v-text-field>
                 </v-col>
@@ -58,6 +60,7 @@
                   <v-text-field
                     v-model="bookAvailbleCopies"
                     label="Cópias disponíveis"
+                    type="number"
                     required
                   ></v-text-field>
                 </v-col>
@@ -84,7 +87,6 @@
                   <v-col cols="12" md="4">
                     <v-text-field
                       v-model="bookNameEdit"
-                      :counter="10"
                       label="Título"
                       hide-details
                       required
@@ -94,7 +96,6 @@
                   <v-col cols="12" md="4">
                     <v-text-field
                       v-model="bookAuthorEdit"
-                      :counter="10"
                       label="Autor"
                       hide-details
                       required
@@ -105,6 +106,7 @@
                     <v-text-field
                       v-model="bookPublicationYearEdit"
                       label="Ano de publicação"
+                      type="number"
                       hide-details
                       required
                     ></v-text-field>
@@ -123,6 +125,7 @@
                     <v-text-field
                       v-model="bookCopiesEdit"
                       label="Cópias"
+                      type="number"
                       hide-details
                       required
                     ></v-text-field>
@@ -132,6 +135,7 @@
                     <v-text-field
                       v-model="bookAvailbleCopiesEdit"
                       label="Cópias disponíveis"
+                      type="number"
                       hide-details
                       required
                     ></v-text-field>
@@ -152,7 +156,7 @@
           <div
             class="d-flex ga-5 align-center mt-3"
             v-for="(book, index) in books"
-            :key="index"
+            :key="book.id"
           >
             <v-card class="pa-3">
               <strong>{{ book.title }}</strong><br>
@@ -210,10 +214,17 @@
       </v-window>
     </v-card-text>
   </v-card>
+
+  <Modal 
+    message="Livro cadastrado com sucesso!"
+    title="Livro cadastrado"
+    :isActive="activeModal"
+  />
 </template>
 
 <script lang="ts" setup>
 import SideMenu from "../components/SideMenu.vue";
+import Modal from "../components/Modal.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { IBook, ICategory } from "../interfaces";
@@ -249,6 +260,8 @@ const reserveAmount = ref();
 const bookForGiveBack = ref();
 const giveBackAmount = ref();
 
+const activeModal = ref(false);
+
 const createBook = async () => {
   const date = new Date();
 
@@ -262,8 +275,10 @@ const createBook = async () => {
       availbleCopies: parseInt(bookAvailbleCopies.value),
       categoryId: selectedCategory.value,
     });
-    if (createBook.status == 201) window.alert("Livro cadastrado com sucesso!");
-    return createBook;
+    if(createBook) {
+      if(createBook.status == 201) activeModal.value = true;
+      return createBook;
+    }
   }
 };
 
@@ -307,9 +322,10 @@ const reserveBook = async (id: number) => {
   const reserveBook = await axios.patch(`http://localhost:3001/books/reserve/${id}`, {
     reserveAmount: parseInt(reserveAmount.value)
   })
-  console.log(reserveBook)
-  if (reserveBook.status == 200 && reserveBook.data !== "") window.alert("Livro reservado com sucesso!");
-  return reserveBook;
+  if(reserveBook) {
+    if (reserveBook.status == 200 && reserveBook.data !== "") window.alert("Livro reservado com sucesso!");
+    return reserveBook;
+  }
 }
 
 const giveBackBook = async (id: number) => {

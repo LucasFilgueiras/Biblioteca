@@ -34,9 +34,7 @@
                   <v-col cols="12" md="4">
                     <v-text-field
                       v-model="categoryNameEdit"
-                      :counter="10"
                       label="Nome"
-                      hide-details
                       required
                     ></v-text-field>
                   </v-col>
@@ -48,6 +46,7 @@
           <div
             class="d-flex ga-3 align-center mt-3"
             v-for="(category, index) in categories"
+            :key="category.id"
           >
             <v-card class="pa-3">{{ category.name }}</v-card>
             <v-icon
@@ -65,10 +64,17 @@
       </v-window>
     </v-card-text>
   </v-card>
+
+  <Modal 
+    message="Categoria cadastrada com sucesso!"
+    title="Categoria cadastrada"
+    :isActive="activeModal"
+  />
 </template>
 
 <script lang="ts" setup>
 import SideMenu from "../components/SideMenu.vue";
+import Modal from "../components/Modal.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { ICategory } from "../interfaces";
@@ -80,15 +86,17 @@ const categoryId = ref<number>();
 const categories = ref<ICategory[]>([]);
 const showEdit = ref(false);
 
+const activeModal = ref(false);
+
 const createCategory = async () => {
   if(categoryName.value !== "") {
     const createCategory = await axios.post("http://localhost:3001/categories", {
       name: categoryName.value,
     });
-    if (createCategory.status == 201)
-      window.alert("Categoria criada com sucesso!");
-    
-    return createCategory;
+    if(createCategory) {
+      if (createCategory.status == 201) activeModal.value = true;
+      return createCategory;
+    }
   }
 };
 

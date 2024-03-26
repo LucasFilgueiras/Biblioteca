@@ -15,7 +15,7 @@
     ></v-text-field>
     <v-btn @click="filterBooks">Pesquisar</v-btn>
   </div>
-  <div class="mx-5" v-for="(book, index) in books" :key="index">
+  <div class="mx-5" v-for="(book, index) in books" :key="book.id">
     <v-card
       class="pa-3 mt-2"
     >
@@ -65,8 +65,6 @@ const filterBooks = async () => {
     })
     books.value = searchByCategory.data
   }
-
-  console.log(books.value)
 }
 
 onMounted(fetchAllBooks);
