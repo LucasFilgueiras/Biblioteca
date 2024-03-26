@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
 import { BookService } from './book.service';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from '@prisma/client';
 import { IFilterBook } from 'src/interfaces';
+import { Response } from 'express';
 
 @Controller('books')
 export class BookController {
@@ -44,8 +45,8 @@ export class BookController {
   }
 
   @Patch('/reserve/:id')
-  reserve(@Param('id') id: string, @Body() reserveAmount: { reserveAmount: number }) {
-    return this.bookService.reserve(+id, reserveAmount);
+  reserve(@Param('id') id: string, @Body() reserveAmount: { reserveAmount: number }, @Res() response: Response) {
+    return this.bookService.reserve(+id, reserveAmount, response);
   }
 
   @Patch('/giveBack/:id')

@@ -6,36 +6,56 @@ import { prisma } from 'src/utils/db';
 @Injectable()
 export class CategoryService {
   async create(createCategoryDto: Category) {
-    const createCategory = await prisma.category.create({
-      data: createCategoryDto
-    })
-    return createCategory;
+    try {
+      const createCategory = await prisma.category.create({
+        data: createCategoryDto
+      })
+      return createCategory;
+    } catch (error) {
+      return error;
+    }
   }
 
   async findAll() {
-    const findAllCategories = await prisma.category.findMany();
-    return findAllCategories;
+    try {
+      const findAllCategories = await prisma.category.findMany();
+      return findAllCategories;
+    } catch (error) {
+      return error;
+    }
   }
 
   async findOne(id: number) {
-    const findOneCategory = await prisma.category.findUnique({
-      where: { id }
-    })
-    return findOneCategory;
+    try {
+      const findOneCategory = await prisma.category.findUnique({
+        where: { id }
+      })
+      return findOneCategory;
+    } catch (error) {
+      return error;
+    }
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    const updateCategory = await prisma.category.update({
-      where: { id },
-      data: updateCategoryDto
-    })
-    return updateCategory;
+    try {
+      const updateCategory = await prisma.category.update({
+        where: { id },
+        data: updateCategoryDto
+      })
+      return updateCategory;
+    } catch (error) {
+      return error;
+    }
   }
 
   async remove(id: number) {
-    const removeCategory = await prisma.category.delete({
-      where: { id }
-    })
-    return removeCategory;
+    try {
+      const removeCategory = await prisma.category.delete({
+        where: { id }
+      })
+      return removeCategory;
+    } catch (error) {
+      return error;
+    }
   }
 }
