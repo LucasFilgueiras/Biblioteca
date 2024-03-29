@@ -97,6 +97,7 @@ const createCategory = async () => {
       if (createCategory.status == 201) activeModal.value = true;
       return createCategory;
     }
+    categoryName.value = "";
   }
 };
 

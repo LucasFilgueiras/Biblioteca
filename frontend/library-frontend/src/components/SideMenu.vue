@@ -1,27 +1,12 @@
 <template>
   <v-navigation-drawer>
-    <v-list-item title="Biblioteca" class="cursor-pointer" @click="redirectIndex"></v-list-item>
+    <router-link to="/" class="text-white"><v-list-item title="Biblioteca" class="cursor-pointer"></v-list-item></router-link>
     <v-divider></v-divider>
-    <v-list-item link title="Livros" @click="redirectBooks"></v-list-item>
-    <v-list-item link title="Categorias" @click="redirectCategories"></v-list-item>
+    <router-link to="/books" class="text-white"><v-list-item link title="Livros"></v-list-item></router-link>
+    <router-link to="/categories" class="text-white"><v-list-item link title="Categorias"></v-list-item></router-link>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router"
-
-const router = useRouter();
-
-const redirectBooks = () => {
-  router.push({ name: "books" });
-}
-
-const redirectCategories = () => {
-  router.push({ name: "categories" });
-}
-
-const redirectIndex = () => {
-  router.push({ name: "home" });
-}
 
 </script>

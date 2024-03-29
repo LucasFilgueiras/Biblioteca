@@ -1,17 +1,15 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 
-import HomePage from '../pages/index.vue'
-import BooksPage from '../pages/books.vue'
-import CategoriesPage from '../pages/categories.vue'
+import HomePage from '../views/index.vue'
 
 const routes = [
-  { path: '/', component: HomePage, name: "home" },
-  { path: '/books', component: BooksPage, name: "books" },
-  { path: '/categories', component: CategoriesPage, name: "categories" },
+  { path: '/', name: "home", component: HomePage },
+  { path: '/books', name: "books", component: () => import("../views/Books.vue") },
+  { path: '/categories', name: "categories", component: () => import("../views/Categories.vue") },
 ]
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes,
 })
 

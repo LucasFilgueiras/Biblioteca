@@ -21,7 +21,7 @@
     >
       <strong>Título: {{ book.title }}</strong><br>
       <small>Descrição: {{ book.description }}</small><br>
-      <small>Escrito por: {{ book.author }}</small><br>
+      <small>Autor: {{ book.author }}</small><br>
       <small>Categoria: {{ book.category?.name }}</small><br>
       <small>Cópias disponíveis: {{ book.availbleCopies }}</small><br>
       <small>Cópias: {{ book.copies }}</small>
